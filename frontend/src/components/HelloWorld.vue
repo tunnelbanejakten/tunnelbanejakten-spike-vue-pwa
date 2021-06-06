@@ -1,14 +1,16 @@
 <template>
   <div class="hello">
     <Geolocation />
+    <Backend />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import Geolocation from '@/components/Geolocation.vue'
+import Backend from '@/components/Backend.vue'
 @Component({
-  components: { Geolocation }
+  components: { Backend, Geolocation }
 })
 export default class HelloWorld extends Vue {
 }
