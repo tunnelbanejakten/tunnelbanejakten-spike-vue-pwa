@@ -4,16 +4,18 @@
                         label='Geolocation'
                         :status="prerequisiteStatus"
                         @on-button-click="toggleStatusShown"
-                        buttonLabel='Status' />
+                        buttonLabel='Status'/>
     <div v-if="showStatus">
       <p>{{ geolocationMessage }}</p>
       <div v-if="isStatusSuccessful()">
         <p>Latitude: {{ latitude.toFixed(10) }}</p>
         <p>Longitude: {{ longitude.toFixed(10) }}</p>
-        <p>Accuracy: {{ accuracy.toFixed(0) }} meters</p>
-        <p v-for="item in checkpointsDistances()" :key="item.label">
-          Distance to {{ item.label }}: {{ item.distance }}
-        </p>
+        <p>Accuracy: {{ accuracy.toFixed(2) }} km</p>
+        <p>Distances:</p>
+        <div class="distance" v-for="item in checkpointsDistances()" :key="item.label">
+          <div class="label">{{ item.label }}</div>
+          <div class="value">{{ item.distance.toFixed(2) }} km</div>
+        </div>
       </div>
     </div>
   </div>
@@ -65,6 +67,21 @@ const checkpoints = [
     label: 'Equmenia Hässelby',
     latitude: 59.377278,
     longitude: 17.821176
+  },
+  {
+    label: 'Ankdammen vid Bergslagsplan',
+    latitude: 59.365252,
+    longitude: 17.860014
+  },
+  {
+    label: 'Sankt Tomas kyrka',
+    latitude: 59.362901,
+    longitude: 17.870432
+  },
+  {
+    label: 'Pallas konditori',
+    latitude: 59.362267,
+    longitude: 17.872503
   },
   {
     label: 'Norrmalmskyrkan',
@@ -129,21 +146,23 @@ export default class Geolocation extends Vue {
   }
 
   checkpointsDistances () {
-    return checkpoints.map(({ label: checkpointLabel, latitude: checkpointLatitude, longitude: checkpointLongitude }) => (
-      {
-        label: checkpointLabel,
-        distance: coordinateDistance(
-          {
-            latitude: this.latitude,
-            longitude: this.longitude
-          },
-          {
-            latitude: checkpointLatitude,
-            longitude: checkpointLongitude
-          }
-        ).toFixed(2)
-      }
-    ))
+    return checkpoints
+      .map(({ label: checkpointLabel, latitude: checkpointLatitude, longitude: checkpointLongitude }) => (
+        {
+          label: checkpointLabel,
+          distance: coordinateDistance(
+            {
+              latitude: this.latitude,
+              longitude: this.longitude
+            },
+            {
+              latitude: checkpointLatitude,
+              longitude: checkpointLongitude
+            }
+          )
+        }
+      ))
+      .sort(({ distance: d1 }, { distance: d2 }) => d1 - d2)
   }
 
   created () {
@@ -189,7 +208,7 @@ export default class Geolocation extends Vue {
               longitude
             }
           } = position
-          this.accuracy = accuracy
+          this.accuracy = 1.0 * accuracy / 1000
           this.latitude = latitude
           this.longitude = longitude
           this.geolocationStatus = GeolocationStatus.LOCATION_REQUEST_SUCCEEDED
@@ -234,5 +253,17 @@ export default class Geolocation extends Vue {
 </script>
 
 <style scoped>
+.distance {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
+  margin-bottom: 5px;
+  margin-left: 20px;
+}
+.distance .label {
+}
+
+.distance .value {
+}
 </style>
