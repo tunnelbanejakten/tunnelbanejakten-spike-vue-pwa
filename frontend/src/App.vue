@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <div>
-      <button v-if="isUpdatePending" @click="refreshApplication">Update app</button>
+    <div v-if="isUpdatePending">
+      <p>
+        <strong>A new version of the app is available.</strong>
+        We recommend you save your changes and then click Update.
+      </p>
+      <button @click="onUpdateApp">Update</button>
+      <p><small>Updating the app will reload the page.</small></p>
     </div>
     <!--
         <div id="nav">
@@ -15,13 +20,15 @@
 
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
-import ServiceWorkerMixing from '@/mixins/serviceWorker'
+import ServiceWorkerMixin from '@/mixins/ServiceWorkerMixin'
 
 @Component({
   name: 'App'
 })
-export default class App extends Mixins(ServiceWorkerMixing) {
-
+export default class App extends Mixins(ServiceWorkerMixin) {
+  onUpdateApp () {
+    this.refreshApplication()
+  }
 }
 </script>
 
