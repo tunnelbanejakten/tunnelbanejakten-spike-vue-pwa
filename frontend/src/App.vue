@@ -1,14 +1,29 @@
 <template>
   <div id="app">
-<!--
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div>
+      <button v-if="isUpdatePending" @click="refreshApplication">Update app</button>
     </div>
--->
+    <!--
+        <div id="nav">
+          <router-link to="/">Home</router-link> |
+          <router-link to="/about">About</router-link>
+        </div>
+    -->
     <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Mixins } from 'vue-property-decorator'
+import ServiceWorkerMixing from '@/mixins/serviceWorker'
+
+@Component({
+  name: 'App'
+})
+export default class App extends Mixins(ServiceWorkerMixing) {
+
+}
+</script>
 
 <style>
 #app {
