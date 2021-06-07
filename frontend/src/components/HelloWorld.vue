@@ -3,6 +3,7 @@
     <Geolocation />
     <Backend />
     <Camera />
+    <QrCodeReader />
   </div>
 </template>
 
@@ -11,9 +12,10 @@ import { Component, Vue } from 'vue-property-decorator'
 import Geolocation from '@/components/Geolocation.vue'
 import Backend from '@/components/Backend.vue'
 import Camera from '@/components/Camera.vue'
+import QrCodeReader from '@/components/QrCodeReader.vue'
 
 @Component({
-  components: { Camera, Backend, Geolocation }
+  components: { QrCodeReader, Camera, Backend, Geolocation }
 })
 export default class HelloWorld extends Vue {
 }

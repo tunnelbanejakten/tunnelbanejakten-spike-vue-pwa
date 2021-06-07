@@ -21,10 +21,10 @@ export const Status = {
   name: 'PrerequisiteStatus'
 })
 export default class PrerequisiteStatus extends Vue {
-  @Prop() private label = ''
-  @Prop() private status = ''
-  @Prop() private icon = ''
-  @Prop() private buttonLabel = ''
+  @Prop({ default: '' }) private readonly label!: string
+  @Prop({ default: '' }) private readonly status!: string
+  @Prop({ default: '' }) private readonly icon!: string
+  @Prop({ default: '' }) private readonly buttonLabel!: string
 
   @Emit()
   onButtonClick () {
