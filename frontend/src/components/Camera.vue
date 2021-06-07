@@ -36,7 +36,7 @@ import { WebCam } from 'vue-web-cam'
   components: { PrerequisiteStatus, WebCam }
 })
 export default class Camera extends Vue {
-  private prerequisiteStatus = Status.PENDING;
+  private prerequisiteStatus = Status.USER_INTERACTION_REQUIRED;
   private showStatus = false;
 
   private img? = ''
@@ -68,6 +68,7 @@ export default class Camera extends Vue {
     const cam: any = this.$refs.webcam
     const image = cam.capture()
     console.log('🏞', image)
+    this.prerequisiteStatus = Status.SUCCESS
   }
 
   stop () {
@@ -88,16 +89,6 @@ export default class Camera extends Vue {
   onStopped (stream: any) {
     console.log('On Stopped Event', stream)
     this.isPlaying = false
-  }
-
-  onStop () {
-    const cam: any = this.$refs.webcam
-    cam.stop()
-  }
-
-  onStart () {
-    const cam: any = this.$refs.webcam
-    cam.stop()
   }
 
   onError (error: any) {
