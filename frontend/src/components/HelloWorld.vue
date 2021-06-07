@@ -2,6 +2,7 @@
   <div class="hello">
     <Geolocation />
     <Backend />
+    <Camera />
   </div>
 </template>
 
@@ -9,8 +10,10 @@
 import { Component, Vue } from 'vue-property-decorator'
 import Geolocation from '@/components/Geolocation.vue'
 import Backend from '@/components/Backend.vue'
+import Camera from '@/components/Camera.vue'
+
 @Component({
-  components: { Backend, Geolocation }
+  components: { Camera, Backend, Geolocation }
 })
 export default class HelloWorld extends Vue {
 }
